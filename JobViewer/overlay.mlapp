@@ -1,0 +1,50 @@
+function overlay
+
+    % Create small window
+    fig = uifigure( ...
+        'Name', 'Overlay Tool', ...
+        'Position', [500 500 220 100]);
+
+    % Single button
+    btn = uibutton(fig, ...
+        'Text', 'Run Overlay Script', ...
+        'Position', [30 30 160 40], ...
+        'ButtonPushedFcn', @(btn,event) run_script());
+
+end
+
+function run_script()
+
+    % === YOUR ORIGINAL SCRIPT ===
+    [imgs,dr] = uigetfile('*.tif','Select 2 images','MultiSelect','on');
+
+    if isequal(imgs,0) || length(imgs) ~= 2
+        error('Select exactly 2 images');
+    end
+
+    mxdif = 8;
+
+    Dn = imread(fullfile(dr, imgs{1}));
+
+    % Convert second image to PNG to extract alpha
+    src2 = fullfile(dr, imgs{2});
+    tmp = [tempname '.png'];
+    copyfile(src2, tmp);
+
+    [Ub,~,Alpha] = imread(tmp);
+    delete(tmp);
+
+    img1 = Ub;
+    img2 = imresize(Dn(:,:,1:4),127/300);
+
+    dsz = sum(abs(size(img1,1:2)-size(img2,1:2)));
+
+    if dsz > 0 && dsz < mxdif
+        img2 = imresize(Dn(:,:,1:4), size(img1,1:2));
+    elseif dsz >= mxdif
+        error('Images are not the same size');
+    end
+
+    overlay_with_alpha(img1,img2);
+
+end
