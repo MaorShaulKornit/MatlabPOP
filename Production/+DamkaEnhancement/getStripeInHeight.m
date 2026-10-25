@@ -1,20 +1,13 @@
-function Img = getStripeInHeight(F,DB,isDebug,DebugDir)
+function Img = getStripeInHeight(Props,DB,isDebug,DebugDir)
 if nargin == 2
     isDebug = false;
     DebugDir = [];
 end
-Nms = struct2table(cellfun(@DamkaEnhancement.Utills.getPOPNameInfo,F.imgNames));
-Nms1 = sortrows(Nms,'CamID');
-Nms1 = sortrows(Nms1,'ImgInd');
 
-PropImg = F.getImageByName(Nms1.Input(1));
-im1 = DamkaEnhancement.Utills.myRealFishEye(PropImg.getImage,-0.022);
-PropImg = F.getImageByName(Nms1.Input(2));
-im2 = DamkaEnhancement.Utills.myRealFishEye(PropImg.getImage,-0.022);
-PropImg = F.getImageByName(Nms1.Input(3));
-im3 = DamkaEnhancement.Utills.myRealFishEye(PropImg.getImage,-0.022);
-PropImg = F.getImageByName(Nms1.Input(4));
-im4 = DamkaEnhancement.Utills.myRealFishEye(PropImg.getImage,-0.022);
+im1 = DamkaEnhancement.Utills.myRealFishEye(Props(1).getImage,-0.022);
+im2 = DamkaEnhancement.Utills.myRealFishEye(Props(2).getImage,-0.022);
+im3 = DamkaEnhancement.Utills.myRealFishEye(Props(3).getImage,-0.022);
+im4 = DamkaEnhancement.Utills.myRealFishEye(Props(4).getImage,-0.022);
 
 Iwarp1 = DamkaEnhancement.Utills.applyDistortion(im1,DB.Hn.im1.dX,DB.Hn.im1.dY);
 Iwarp2 = DamkaEnhancement.Utills.applyDistortion(im2,DB.Hn.im2.dX,DB.Hn.im2.dY);
