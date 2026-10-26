@@ -12,8 +12,8 @@ classdef POPSnapshots < folderTree
             obj = obj@folderTree(dir);
             Nms = obj.imgNames;
             obj.tDta = struct2table(cellfun(@getPOPNameInfo,Nms));
-            obj.tDta = sortrows(obj.tDta,'CamID');
-            obj.tDta = sortrows(obj.tDta,'ImgInd');          
+%             obj.tDta = sortrows(obj.tDta,'CamID');
+%             obj.tDta = sortrows(obj.tDta,'ImgInd');          
         end
                 
         function T = getBacthData(obj,id)
