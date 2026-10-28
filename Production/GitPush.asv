@@ -1,7 +1,0 @@
-function GitPush(cmnt)
-
-!git add .
-!git commit -m "Updated code"
-!git push
-
-end
